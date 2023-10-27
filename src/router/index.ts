@@ -23,8 +23,9 @@ router.beforeEach(async (to, from, next) => {
   if (
     to.matched.some((r) => {
       return r.meta?.auth || r.meta?.permission;
-    })
+    }) || to.fullPath.indexOf('/login') !== 0
   ) {
+
     const userStore = useUserStore();
     // 这里暂时将cookie里是否存有token作为验证是否登录的条件
     // 请根据自身业务需要修改

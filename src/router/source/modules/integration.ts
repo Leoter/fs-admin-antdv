@@ -5,7 +5,8 @@ export const integrationResources = [
     path: "/integration",
     redirect: "/integration/bpmn",
     meta: {
-      icon: "ion:apps-sharp"
+      icon: "ion:apps-sharp",
+      permission: "sys:auth"
     },
     children: [
       {
@@ -14,7 +15,8 @@ export const integrationResources = [
         path: "/integration/bpmn",
         component: "/integration/bpmn/index.vue",
         meta: {
-          icon: "ion:disc-outline"
+          icon: "ion:disc-outline",
+          permission: "sys:auth"
         }
       }
     ]

@@ -4,9 +4,7 @@ export const sysResources = [
   {
     title: "系统管理",
     name: "sys",
-    path: "/sys",
-    redirect: "/sys/authority",
-    component: LayoutPass,
+    path: "/born/user",
     meta: {
       icon: "ion:settings-outline",
       permission: "sys"
@@ -25,37 +23,72 @@ export const sysResources = [
         children: [
           {
             title: "权限资源管理",
-            name: "permission",
+            name: "permissions",
+            path: "/born/permissions",
+            component: "/born/permissions/index.vue",
             meta: {
-              icon: "ion:list-outline",
+              icon: "ion:home-outline",
               //需要校验权限
               permission: "sys:auth:per:view"
             },
-            path: "/sys/authority/permission",
-            component: "/sys/authority/permission/index.vue"
           },
           {
             title: "角色管理",
-            name: "role",
+            name: "roles",
+            path: "/born/role",
+            component: "/born/role/index.vue",
             meta: {
-              icon: "ion:people-outline",
-              permission: "sys:auth:role:view"
+              icon: "ion:home-outline",
+              //需要校验权限
+              permission: "sys:auth:per:view"
             },
-            path: "/sys/authority/role",
-            component: "/sys/authority/role/index.vue"
-          }
+          },
         ]
       },
       {
         title: "用户管理",
         name: "user",
+        path: "/born/user",
+        component: "/born/user/index.vue",
         meta: {
-          icon: "ion:person-outline",
-          permission: "sys:auth:user:view"
+          icon: "ion:home-outline",
+          isMenu: true,
+          permission: "sys:auth"
         },
-        path: "/sys/authority/user",
-        component: "/sys/authority/user/index.vue"
-      }
+      },
+      {
+        title: "地图测试",
+        name: "map",
+        path: "/framework/map",
+        component: "/framework/map/index.vue",
+        meta: {
+          icon: "ion:home-outline",
+          isMenu: true,
+          permission: "sys:auth"
+        },
+      },
+      {
+        title: "地图围栏测试",
+        name: "fence",
+        path: "/framework/map/fence",
+        component: "/framework/map/fence/index.vue",
+        meta: {
+          icon: "ion:home-outline",
+          isMenu: true,
+          permission: "sys:auth"
+        },
+      },
+      {
+        title: "地图测距测试",
+        name: "map",
+        path: "/framework/map/c",
+        component: "/framework/map/distence.vue",
+        meta: {
+          icon: "ion:home-outline",
+          isMenu: true,
+          permission: "sys:auth"
+        },
+      },
     ]
   }
 ];

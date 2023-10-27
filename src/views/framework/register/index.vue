@@ -83,7 +83,8 @@ export default defineComponent({
       const userInfo = await userStore.login(
         toRaw({
           password: formState.password,
-          username: formState.username
+          username: formState.username,
+          userPassword: ""
         })
       );
     };

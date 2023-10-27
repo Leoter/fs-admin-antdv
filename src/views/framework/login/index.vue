@@ -14,8 +14,8 @@
               </template>
             </a-input>
           </a-form-item>
-          <a-form-item has-feedback name="password">
-            <a-input-password v-model:value="formState.password" placeholder="请输入密码" size="large" autocomplete="off">
+          <a-form-item has-feedback name="userPassword">
+            <a-input-password v-model:value="formState.userPassword" placeholder="请输入密码" size="large" autocomplete="off">
               <template #prefix>
                 <span class="iconify" data-icon="ion:lock-closed-outline" data-inline="false"></span>
               </template>
@@ -74,6 +74,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, toRaw, computed } from "vue";
 import { useUserStore } from "/src/store/modules/user";
+
 export default defineComponent({
   name: "LoginPage",
   setup() {
@@ -81,9 +82,10 @@ export default defineComponent({
     const userStore = useUserStore();
     const formRef = ref();
     const formState = reactive({
-      username: "admin",
+      username: "",
       mobile: "",
-      password: "123456",
+      userPassword: "",
+      password: "",
       loginType: "password", //password
       imgCode: "",
       smsCode: ""
@@ -132,7 +134,7 @@ export default defineComponent({
       console.log(values, formState);
       loading.value = true;
       try {
-        const userInfo = await userStore.login(toRaw(formState));
+        await userStore.login(toRaw(formState));
       } finally {
         loading.value = false;
       }

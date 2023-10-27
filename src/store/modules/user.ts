@@ -7,10 +7,12 @@ import { LocalStorage } from "/src/utils/util.storage";
 import * as UserApi from "/src/api/modules/api.user";
 // @ts-ignore
 import { LoginReq, UserInfoRes } from "/@/api/modules/api.user";
+import {  AdditionalInformation } from "/@/model/login"
 import { Modal } from "ant-design-vue";
 import { useI18n } from "vue-i18n";
 
 import { mitter } from "/src/utils/util.mitt";
+import { encryptPass } from "/@/utils/util.pass";
 
 interface UserState {
   userInfo: Nullable<UserInfoRes>;
@@ -28,7 +30,7 @@ export const useUserStore = defineStore({
     token: undefined
   }),
   getters: {
-    getUserInfo(): UserInfoRes {
+    getUserInfo(): AdditionalInformation {
       return this.userInfo || LocalStorage.get(USER_INFO_KEY) || {};
     },
     getToken(): string {
@@ -37,10 +39,12 @@ export const useUserStore = defineStore({
   },
   actions: {
     setToken(info: string, expire: number) {
-      this.token = info;
+      this.token = 'bearer ' + info;
       LocalStorage.set(TOKEN_KEY, this.token, expire);
     },
-    setUserInfo(info: UserInfoRes) {
+    setUserInfo(info: AdditionalInformation) {
+      console.log("@setUserInfo", info);
+      
       this.userInfo = info;
       LocalStorage.set(USER_INFO_KEY, info);
     },
@@ -55,15 +59,22 @@ export const useUserStore = defineStore({
      */
     async login(params: LoginReq): Promise<any> {
       try {
+        params.password  = encryptPass(params.userPassword);
+        params.userPassword = "";
         const data = await UserApi.login(params);
-        const { token, expire } = data;
 
+        const { value, expiration } = data.additionalInformation;
+        
         // save token
-        this.setToken(token, expire);
-        // get user info
-        const userInfo = await this.getUserInfoAction();
+        this.setToken(value, expiration);
+        // get user info , no use because login will return
+        // const userInfo = await this.getUserInfoAction();
         await router.replace("/");
-        mitter.emit("app.login", { userInfo, token: data });
+        const userInfo = data.additionalInformation.additionalInformation;
+        console.log("@userInfo", userInfo);
+        this.setUserInfo(userInfo);
+        // 事件总线传递，但是好像没找到定位的地方 定位应为 mitter.on("app.login")
+        mitter.emit("app.login", { userInfo , token: value });
         return userInfo;
       } catch (error) {
         return null;

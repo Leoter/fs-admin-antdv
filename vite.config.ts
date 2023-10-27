@@ -37,7 +37,7 @@ export default ({ command, mode }) => {
   }
 
   return {
-    base: "/antdv/",
+    base: "/",
     plugins: [
       DefineOptions(),
       vueJsx(),
@@ -92,9 +92,11 @@ export default ({ command, mode }) => {
         // with options
         "/api": {
           //配套后端 https://github.com/fast-crud/fs-server-js
-          target: "http://127.0.0.1:7001"
+          target: "http://127.0.0.1:10000",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
         }
       }
-    }
+    },
   };
 };

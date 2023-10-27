@@ -22,13 +22,16 @@ interface PermissionState {
  * @returns {*}
  */
 function formatPermissions(menuTree: Array<any>, permissionList: any[] = []) {
+  console.log("@menuTree", menuTree);
+  console.log("@permissionList", permissionList);
+  
   if (menuTree == null) {
     menuTree = [];
   }
   menuTree.forEach((item: any) => {
-    if (item.permission) {
+    if (item) {
       // @ts-ignore
-      permissionList.push(item.permission);
+      permissionList.push(item);
     }
     if (item.children != null && item.children.length > 0) {
       formatPermissions(item.children, permissionList);
@@ -78,13 +81,19 @@ export const usePermissionStore = defineStore({
         console.warn("当前权限模块未开启，权限列表为空");
       } else {
         //开启了权限模块，向后台请求权限列表
-        const data = await getPermissions();
-        if (data != null) {
-          permissionTree = data;
-        } else {
-          console.warn("当前获取到的权限列表为空");
-        }
+        try{
+          const data = await getPermissions();
+          
+          if (data != null) {
+            permissionTree = data;
+          } else {
+            console.warn("当前获取到的权限列表为空");
+          }
+        } catch (e) {
+          console.error("获取权限失败 ", e);
+        } 
       }
+      
       this.resolve(permissionTree);
     }
   }

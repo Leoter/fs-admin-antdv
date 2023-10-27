@@ -54,6 +54,8 @@ export const useResourceStore = defineStore({
       this.inited = true;
 
       const showMenus = _.cloneDeep(frameworkMenus[0].children);
+      console.log("@showMenus:", showMenus);
+      
       this.frameworkMenus = filterMenus(showMenus, (item: any) => {
         return item?.meta?.showOnHeader !== false;
       });
@@ -107,15 +109,19 @@ export const useResourceStore = defineStore({
       }
     },
     filterByPermission(permissions: any) {
-      this.frameworkMenus = this.filterChildrenByPermission(this.frameworkMenus, permissions);
+      this.frameworkMenus = this.filterChildrenByPermission(this.frameworkMenus, permissions);      
     },
     filterChildrenByPermission(list: any, permissions: any) {
+      console.log("@list", list);
+      console.log("@permissions", permissions);
+      
       const menus = list.filter((item: any) => {
         if (item?.meta?.permission) {
           return permissions.includes(item.meta.permission);
         }
-        return true;
+        return false  ;
       });
+      
       for (const menu of menus) {
         if (menu.children && menu.children.length > 0) {
           menu.children = this.filterChildrenByPermission(menu.children, permissions);

@@ -1,11 +1,17 @@
+import LayoutPass from "/@/layout/layout-pass.vue";
+
 export const crudResources = [
   {
     title: "CRUD示例",
     name: "crud",
     path: "/crud",
-    redirect: "/crud/basis",
+    redirect: "/crud/basis",  
+    showOnHeader: true,
+    component: LayoutPass,
     meta: {
-      icon: "ion:apps-sharp"
+      icon: "ion:list-outline",
+      //需要校验权限
+      permission: "sys:auth:per:view"
     },
     children: [
       {
@@ -14,7 +20,9 @@ export const crudResources = [
         path: "/crud/debug",
         component: "/crud/debug/index.vue",
         meta: {
-          isMenu: false
+          isMenu: true  ,
+          icon: "ion:list-outline",
+          permission: "sys:auth:per:view"
         }
       },
       {

@@ -1,14 +1,20 @@
 import { request, requestForMock } from "../service";
 import { env } from "/@/utils/util.env";
+import { additionalInformationData } from '../../model/login'
+import { commonEnv } from "/@/utils/util.common.env";
+const apiPrefix = commonEnv.SERVICE_UAA;
+
+
 /**
  * @description: Login interface parameters
  */
 export interface LoginReq {
   username: string;
-  password: string;
+  password: any;
+  userPassword: any;
 }
 
-export interface UserInfoRes {
+export interface AdditionalInformation {
   id: string | number;
   username: string;
   nickName: string;
@@ -19,7 +25,7 @@ export interface LoginRes {
   expire: number;
 }
 
-export async function login(data: LoginReq): Promise<LoginRes> {
+export async function login(data: LoginReq): Promise<additionalInformationData> {
   if (env.PM_ENABLED === "false") {
     //没有开启权限模块，模拟登录
     return await requestForMock({
@@ -30,13 +36,13 @@ export async function login(data: LoginReq): Promise<LoginRes> {
   }
   //如果开启了登录与权限模块，则真实登录
   return await request({
-    url: "/login",
+    url: apiPrefix + "/user/login",
     method: "post",
     data
   });
 }
 
-export async function mine(): Promise<UserInfoRes> {
+export async function mine(): Promise<any> {
   if (env.PM_ENABLED === "false") {
     //没有开启权限模块，模拟登录
     return await requestForMock({

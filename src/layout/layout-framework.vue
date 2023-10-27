@@ -1,7 +1,7 @@
 <template>
   <a-layout class="fs-framework">
     <a-layout-sider v-model:collapsed="asideCollapsed" :trigger="null" collapsible>
-      <div class="header-logo">
+      <div class="header-logo" onclick="window.open('/#/index','_self')">
         <img src="/images/logo/rect-black.svg" />
         <span v-if="!asideCollapsed" class="title">FsAdmin</span>
       </div>
@@ -49,7 +49,7 @@
         </router-view>
       </a-layout-content>
       <a-layout-footer class="fs-framework-footer">
-        <div>Powered by Greper</div>
+        <div>Powered by Born</div>
         <div>v{{ version }}</div>
 
         <fs-source-link />

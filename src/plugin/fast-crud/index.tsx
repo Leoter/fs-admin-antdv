@@ -271,7 +271,7 @@ function install(app: any, options: any = {}) {
   const { addTypes, getType } = useTypes();
   //此处演示修改官方字段类型
   const textType = getType("text");
-  textType.search.autoSearchTrigger = "change"; //修改官方的字段类型，设置为文本变化就触发查询
+  // textType.search.autoSearchTrigger = "change"; //修改官方的字段类型，设置为文本变化就触发查询
 
   // 此处演示自定义字段类型
   addTypes({

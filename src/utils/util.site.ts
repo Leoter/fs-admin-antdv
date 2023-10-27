@@ -5,7 +5,7 @@ export const site = {
    * @param {String} title 标题
    */
   title: function (titleText: string) {
-    const processTitle = env.TITLE || "FsAdmin";
+    const processTitle = env.TITLE || "Born's site";
     window.document.title = `${processTitle}${titleText ? ` | ${titleText}` : ""}`;
   }
 };
